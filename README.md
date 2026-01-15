@@ -1,0 +1,1 @@
+bun expo run:android
