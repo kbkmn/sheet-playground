@@ -4,7 +4,7 @@ import { TextInput } from "react-native-gesture-handler";
 
 export default function ComplexActionSheet() {
   return (
-    <ActionSheet gestureEnabled>
+    <ActionSheet gestureEnabled isModal={false}>
       <View className="max-h-full shrink">
         <View className="shrink-0 bg-gray-300 px-4">
           <TextInput placeholder="Search" />

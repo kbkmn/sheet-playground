@@ -7,16 +7,18 @@ export default function SimpleActionSheet() {
   };
 
   return (
-    <ActionSheet gestureEnabled>
-      <View className="gap-4 px-4">
-        <View>
+    <ActionSheet gestureEnabled isModal={false}>
+      <View className="gap-4">
+        <View className="px-4">
           <Text>SIMPLE ACTION SHEET</Text>
         </View>
 
-        <Button
-          onPress={handleCallComplexActionSheet}
-          title="Call complex action sheet"
-        />
+        <View className="bg-gray-300 p-4">
+          <Button
+            onPress={handleCallComplexActionSheet}
+            title="Call complex action sheet"
+          />
+        </View>
       </View>
     </ActionSheet>
   );

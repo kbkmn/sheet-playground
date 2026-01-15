@@ -1,4 +1,4 @@
-import { Button, View, Text } from "react-native";
+import { Button, View, Text, Dimensions } from "react-native";
 import ActionSheet, {
   Route,
   RouteScreenProps,
@@ -9,29 +9,31 @@ import { TextInput } from "react-native-gesture-handler";
 const RouteA = ({
   router,
 }: RouteScreenProps<"nested-action-sheet", "route-a">) => (
-  <View className="gap-4 p-4">
-    <View>
+  <View className="gap-4">
+    <View className="px-4">
       <Text>ROUTE A</Text>
     </View>
 
-    <Button
-      onPress={() => {
-        router.navigate("route-b", undefined, 100);
-      }}
-      title="Go to Route B"
-    />
+    <View className="bg-gray-300 p-4">
+      <Button
+        onPress={() => {
+          router.navigate("route-b", undefined, 100);
+        }}
+        title="Go to Route B"
+      />
+    </View>
   </View>
 );
 
 const RouteB = ({
   router,
 }: RouteScreenProps<"nested-action-sheet", "route-b">) => (
-  <View className="gap-4 p-4">
-    <View>
+  <View className="gap-4">
+    <View className="px-4">
       <Text>ROUTE B</Text>
     </View>
 
-    <View className="gap-2">
+    <View className="gap-2 bg-gray-300 p-4">
       <Button
         onPress={() => {
           router.goBack(undefined, 100);
@@ -51,44 +53,46 @@ const RouteB = ({
 
 const RouteC = ({
   router,
-}: RouteScreenProps<"nested-action-sheet", "route-c">) => (
-  <View className="max-h-full shrink">
-    <View className="shrink-0 bg-gray-300 px-4">
-      <TextInput placeholder="Search" />
-    </View>
-
-    <ScrollView className="shrink">
-      <View className="gap-2 py-4">
-        {[...Array(50)].map((_, idx) => (
-          <View key={idx}>
-            <Text>Hello World #{idx + 1}</Text>
-          </View>
-        ))}
+}: RouteScreenProps<"nested-action-sheet", "route-c">) => {
+  return (
+    <View className="max-h-full shrink pb-4.5">
+      <View className="shrink-0 bg-gray-300 px-4">
+        <TextInput placeholder="Search" />
       </View>
-    </ScrollView>
 
-    <View className="shrink-0 gap-2 bg-gray-300 p-4">
-      <Button
-        onPress={() => {
-          router.goBack(undefined, 100);
-        }}
-        title="Go Back to Route B"
-      />
+      <ScrollView className="shrink">
+        <View className="gap-2 py-4">
+          {[...Array(50)].map((_, idx) => (
+            <View key={idx}>
+              <Text>Hello World #{idx + 1}</Text>
+            </View>
+          ))}
+        </View>
+      </ScrollView>
 
-      <Button
-        onPress={() => {
-          router.navigate("route-d", undefined, 100);
-        }}
-        title="Go to Route D"
-      />
+      <View className="shrink-0 gap-2 bg-gray-300 p-4">
+        <Button
+          onPress={() => {
+            router.goBack(undefined, 100);
+          }}
+          title="Go Back to Route B"
+        />
+
+        <Button
+          onPress={() => {
+            router.navigate("route-d", undefined, 100);
+          }}
+          title="Go to Route D"
+        />
+      </View>
     </View>
-  </View>
-);
+  );
+};
 
 const RouteD = ({
   router,
 }: RouteScreenProps<"nested-action-sheet", "route-d">) => (
-  <View className="gap-4">
+  <View className="gap-4 pb-4.5">
     <View className="shrink-0 bg-gray-300 px-4">
       <TextInput
         placeholder="Multiline input"
@@ -103,7 +107,7 @@ const RouteD = ({
         onPress={() => {
           router.goBack(undefined, 100);
         }}
-        title="Go to Route C"
+        title="Go back to Route C"
       />
     </View>
   </View>
@@ -131,11 +135,11 @@ const routes: Route[] = [
 export default function NestedActionSheet() {
   return (
     <ActionSheet
+      isModal={false}
       gestureEnabled
-      enableRouterBackNavigation={true}
       routes={routes}
       initialRoute="route-a"
-      useBottomSafeAreaPadding={true}
+      enableRouterBackNavigation={true}
     />
   );
 }
