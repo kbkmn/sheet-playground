@@ -5,6 +5,11 @@ import ActionSheet, {
   ScrollView,
 } from "react-native-actions-sheet";
 import { TextInput } from "react-native-gesture-handler";
+import { useSafeAreaInsets } from "react-native-safe-area-context";
+
+import { useKeyboard } from "../../hooks/useKeyboard";
+
+const HANLDER_HEIGHT = 18;
 
 const RouteA = ({
   router,
@@ -51,13 +56,27 @@ const RouteB = ({
   </View>
 );
 
+const { height: screen_height } = Dimensions.get("screen");
+
 const RouteC = ({
   router,
 }: RouteScreenProps<"nested-action-sheet", "route-c">) => {
+  const enabled = router.currentRoute.name === "route-c";
+
+  const insets = useSafeAreaInsets();
+  const { height: keyboardHeight } = useKeyboard();
+
   return (
-    <View className="max-h-full shrink pb-4.5">
+    <View
+      className="shrink"
+      style={{
+        maxHeight:
+          screen_height -
+          (insets.top + insets.bottom + keyboardHeight + HANLDER_HEIGHT),
+      }}
+    >
       <View className="shrink-0 bg-gray-300 px-4">
-        <TextInput placeholder="Search" />
+        <TextInput placeholder="Search" readOnly={!enabled} />
       </View>
 
       <ScrollView className="shrink">
